@@ -17,9 +17,17 @@ from django.core.mail import EmailMessage
 from carts.views import _cart_id
 from carts.models import Cart, CartItem
 import requests
+import boto3
+from botocore.config import Config
+import json
+
+
+
 
 
 def register(request):
+
+    
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -38,7 +46,31 @@ def register(request):
             profile.user_id = user.id
             profile.profile_picture = 'default/default-user.png'
             profile.save()
-
+            
+            
+            #Sending the New SignUp mail using lambda Service
+            lambdafunctionname = "TestLambda"
+            config = Config(read_timeout=5000,
+                            connect_timeout=300,
+                            retries={"max_attempts": 4})
+            lambdafuninput =  {'username':username, 'email':email}
+            session = boto3.Session()
+            lambda_client = session.client('lambda', config=config, region_name='us-east-1')
+            response = lambda_client.invoke(FunctionName=lambdafunctionname,
+                                        InvocationType='RequestResponse',
+                                        Payload=json.dumps(lambdafuninput))
+            res_str = response['Payload'].read()
+            if res_str == "mail sent successully":
+                print("New SignUp mail is sent Successfully")
+            else:
+                print("Error while sending the mail")
+                
+            '''
+            client = boto3.client('sns', region_name='us-east-1')
+            message = f'A new user registered with the username {username}, email {email}'
+            res = client.publish(TopicArn='arn:aws:sns:us-east-1:337066625747:PaintingWorldSNS', Message=message, Subject="New SignUp")
+            print(res)
+            '''
             # USER ACTIVATION
             current_site = get_current_site(request)
             mail_subject = 'Please activate your account'
@@ -51,6 +83,7 @@ def register(request):
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
+
             # messages.success(request, 'Thank you for registering with us. We have sent you a verification email to your email address [rathan.kumar@gmail.com]. Please verify it.')
             return redirect('/accounts/login/?command=verification&email='+email)
     else:
