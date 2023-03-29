@@ -15,7 +15,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool) # True
 
-ALLOWED_HOSTS = ['PaintingWorld-env.eba-siuihazx.us-east-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['http://paintingworld-env.eba-vxmznqiz.us-east-1.elasticbeanstalk.com/']
 
 
 # Application definition
