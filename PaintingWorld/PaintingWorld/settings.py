@@ -10,15 +10,15 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-'''
+
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool) # True
 
 ALLOWED_HOSTS = ['paintingworld-env.eba-mfntfxcm.us-east-1.elasticbeanstalk.com']
-'''
 
+'''
 SECRET_KEY= '47d)n05#ei0rg4#)*@fuhc%$5+0n(t%jgxg$)!1pkegsi*l4c%'
 DEBUG='True'
 EMAIL_HOST='smtp.gmail.com'
@@ -26,6 +26,7 @@ EMAIL_PORT='587'
 EMAIL_HOST_USER = 'vishuvardhan3232@gmail.com'
 EMAIL_HOST_PASSWORD='KRISHNa2'
 EMAIL_USE_TLS='True'
+'''
 
 # Application definition
 
