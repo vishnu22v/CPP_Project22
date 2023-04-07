@@ -10,13 +10,13 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
+'''
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool) # True
-
-ALLOWED_HOSTS = ['paintingworld-env.eba-mfntfxcm.us-east-1.elasticbeanstalk.com']
+'''
+ALLOWED_HOSTS = ['http://paintingworld-env.eba-mfntfxcm.us-east-1.elasticbeanstalk.com/','*']
 
 
 SECRET_KEY= '47d)n05#ei0rg4#)*@fuhc%$5+0n(t%jgxg$)!1pkegsi*l4c%'
@@ -88,7 +88,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+'''
 # Database Configuration
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
@@ -108,8 +108,19 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+'''    
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'vishnudb',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres123',
+        'HOST': 'vishnudbinstance.ctd9bekoezdq.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
+        }
+    }
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'    
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

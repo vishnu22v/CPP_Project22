@@ -47,7 +47,7 @@ def register(request):
             profile.profile_picture = 'default/default-user.png'
             profile.save()
             
-            
+            '''
             #Sending the New SignUp mail using lambda Service
             lambdafunctionname = "TestLambda"
             config = Config(read_timeout=5000,
@@ -64,6 +64,7 @@ def register(request):
                 print("New SignUp mail is sent Successfully")
             else:
                 print("Error while sending the mail")
+            '''    
                 
             '''
             client = boto3.client('sns', region_name='us-east-1')

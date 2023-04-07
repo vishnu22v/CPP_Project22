@@ -90,10 +90,24 @@ def place_order(request, total=0, quantity=0,):
         quantity += cart_item.quantity
     tax = (2 * total)/100
     grand_total = total + tax
+    context = {
+                'order': 10,
+                'cart_items': ['a','b'],
+                'total': 10,
+                'tax': 10,
+                'grand_total': grand_total,
+            }
+    return render(request, 'orders/payments.html', context)
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
+            # Store all the billing information inside Order table
+            try:
+                print("=======================================")
+                print(form)
+            except:
+                print("execpriom-------------------------------")
             # Store all the billing information inside Order table
             data = Order()
             data.user = current_user
@@ -130,8 +144,8 @@ def place_order(request, total=0, quantity=0,):
                 'grand_total': grand_total,
             }
             return render(request, 'orders/payments.html', context)
-    else:
-        return redirect('checkout')
+   # else:
+       # return redirect('checkout')
 
 
 def order_complete(request):
